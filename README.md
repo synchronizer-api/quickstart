@@ -9,7 +9,7 @@
 
   [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/19774779-358d4afa-f4b1-4aac-8167-2d73f9a92882)
 
-- **API Reference](https://docs.synchronizer.io)**
+- **[API Reference](https://docs.synchronizer.io)**
   
 - **[Developer Portal](https://developers.nexhealth.com/signup) - Sign up to access your API keys, credentials, and full documentation.**
 
