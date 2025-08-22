@@ -5,7 +5,7 @@
 **HIPAA Compliant | SOC 2 Certified | 99.9% Uptime | AES-256 Encryption**
 
 - **[API Quickstart](https://github.com/synchronizer-api/quickstart)**
-- **[Postman Collection]((https://god.gw.postman.com/run-collection/19774779-358d4afa-f4b1-4aac-8167-2d73f9a92882))**
+- **[Postman Collection](https://god.gw.postman.com/run-collection/19774779-358d4afa-f4b1-4aac-8167-2d73f9a92882)**
 
   [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/19774779-358d4afa-f4b1-4aac-8167-2d73f9a92882)
 
