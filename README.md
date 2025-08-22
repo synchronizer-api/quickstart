@@ -167,4 +167,12 @@ If everything was set up correctly, you should be able to access the UI at the f
   - Read: varies based on data type and system
   - Write: most write actions complete in 30–60 seconds
  
-  Need Help: developers@nexhealth.com
+---
+
+### Need help? We’ll get you unstuck.
+
+Whether you’re exploring or shipping something live, our team’s here to help. Send us a note — we’ll keep you moving.
+
+[developers@nexhealth.com](mailto:developers@nexhealth.com?subject=Quick%20question%20about%20Synchronizer%20API&body=Hi%20Team%2C%0A%0AI%27m%20working%20on%20Synchronizer%20and%20had%20a%20question%20about...)
+
+---
