@@ -17,6 +17,7 @@
 
 Here you will find a complete example of a simple online booking interface that uses the NexHealth Synchronizer API to schedule appointments.
 
+
 ![app](backend-frontend.png)
 _Frontend + backend example using Synchronizer to power real-time appointment booking._
 
