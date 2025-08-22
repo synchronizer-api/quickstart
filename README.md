@@ -166,4 +166,4 @@ If everything was set up correctly, you should be able to access the UI at the f
   - Read: varies based on data type and system
   - Write: most write actions complete in 30–60 seconds
  
-  Need Help: Chat with an engineer now  developers@nexhealth.com
+  Need Help: developers@nexhealth.com
