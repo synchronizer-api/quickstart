@@ -1,29 +1,48 @@
 <h1>Synchronizer QuickStart</h1>
 
-If you're looking for the fastest way to test syncing with EHR systems - without writing code - this is the place to start.
+**Synchronizer API by NexHealth is the fastest way to connect to any dental practice management system (PMS).**
 
-**Want to skip the guide?**
-Jump straight to the [Postman Collection](https://docs.nexhealth.com/reference/introduction)
+**HIPAA Compliant | SOC 2 Certified | 99.9% Uptime | AES-256 Encryption**
 
-**Looking for full API docs or production setup?**
-Check out the [Developer Portal](https://developers.nexhealth.com/signup) for authentication, endpoints, and real-world examples.
+- **[API Quickstart](https://github.com/synchronizer-api/quickstart)**
+- **[Postman Collection]((https://god.gw.postman.com/run-collection/19774779-358d4afa-f4b1-4aac-8167-2d73f9a92882))**
 
-**Prefer video?**
-We’ve got a [Quickstart walkthrough in 3 minutes](https://www.youtube.com/watch?v=tTkbK4As1fA&list=PLL2Iy1oGVcCacoZ8VsvqKKnzRjNJ6R1ca) and a deeper dive on retry logic, errors, and mapping.
+  [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/19774779-358d4afa-f4b1-4aac-8167-2d73f9a92882)
 
-This repository accompanies [NexHealth's Quickstart Guide](https://developers.nexhealth.com/signup)
+- **API Reference](https://docs.synchronizer.io)**
+  
+- **[Developer Portal](https://developers.nexhealth.com/signup) - Sign up to access your API keys, credentials, and full documentation.**
+
+- **[Quickstart walkthrough in 3 minutes](https://www.youtube.com/watch?v=tTkbK4As1fA&list=PLL2Iy1oGVcCacoZ8VsvqKKnzRjNJ6R1ca)**
 
 Here you will find a complete example of a simple online booking interface that uses the NexHealth Synchronizer API to schedule appointments.
 
 ![app](backend-frontend.png)
+_Frontend + backend example using Synchronizer to power real-time appointment booking._
 
-- [Getting started](#getting-started)
-- [Prerequisites](#prerequisites)
-- [Clone the repository](#clone-the-repository)
-- [Configuration](#configuration)
-- [Installation](#installation)
-- [Starting the Node server and Frontend app](#starting-the-node-server-and-frontend-app)
-- [Performance](#performance)
+## Supported Practice Management Systems
+
+Synchronizer supports a wide range of dental platforms, including:
+
+- Dentrix (On-Prem & Ascend)
+- Eaglesoft
+- Open Dental (Cloud + On-Prem)
+- Curve Dental
+- Carestack
+- Denticon
+- And more
+
+[Getting started](#getting-started)
+
+[Prerequisites](#prerequisites)
+
+[Clone the repository](#clone-the-repository)
+
+[Configuration](#configuration)
+
+[Installation](#installation)
+
+[Starting the Node server and Frontend app](#starting-the-node-server-and-frontend-app)
 
 ## Getting started
 
@@ -146,3 +165,5 @@ If everything was set up correctly, you should be able to access the UI at the f
 - Cloud Systems:
   - Read: varies based on data type and system
   - Write: most write actions complete in 30–60 seconds
+ 
+  Need Help: Chat with an engineer now  developers@nexhealth.com
