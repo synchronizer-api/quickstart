@@ -1,8 +1,14 @@
 <h1>Synchronizer QuickStart</h1>
 
-**Synchronizer API by NexHealth is the fastest way to connect to any dental practice management system (PMS).**
+**Getting Started with Synchronizer API by NexHealth is the fastest way to connect to any dental practice management system (PMS).**
 
 **HIPAA Compliant | SOC 2 Certified | 99.9% Uptime | AES-256 Encryption**
+
+<p>
+  <img src="https://img.shields.io/badge/dental--api-blue" />
+  <img src="https://img.shields.io/badge/node.js-quickstart-brightgreen" />
+  <img src="https://img.shields.io/badge/integration-healthtech-important" />
+</p>
 
 - **[API Quickstart](https://github.com/synchronizer-api/quickstart)**
 - **[Postman Collection](https://god.gw.postman.com/run-collection/19774779-358d4afa-f4b1-4aac-8167-2d73f9a92882)**
