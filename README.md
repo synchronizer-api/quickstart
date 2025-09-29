@@ -27,6 +27,13 @@ Here you will find a complete example of a simple online booking interface that 
 ![app](backend-frontend.png)
 _Frontend + backend example using Synchronizer to power real-time appointment booking._
 
+## Case Studies
+
+See how real-world dental groups are using Synchronizer:
+
+- [Dentina](./case-studies/dentina.md)  
+- [All Star Pediatric Dentistry](./case-studies/all-star-pediatric-dentistry.md)
+
 ## Supported Practice Management Systems
 
 Synchronizer supports a wide range of dental platforms, including:
