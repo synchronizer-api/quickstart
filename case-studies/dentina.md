@@ -1,6 +1,6 @@
 # Case Study: Dentina
 
-Dentina is a multi-practice dental group that needed a reliable way to unify scheduling and patient data across multiple practice management systems (PMS).
+Dentina is an AI-powered virtual dental receptionist that answers calls, talks to patients, and books appointments 24/7.
 
 ---
 
