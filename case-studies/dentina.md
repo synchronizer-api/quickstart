@@ -21,6 +21,8 @@ The Synchronizer team worked directly with Dentina’s leadership and developers
 ---
 
 ## Results
+- 2 Months to Build and Launch
+- 40% calls automated
 - 100% reduction in duplicate patient records  
 - Faster onboarding for new practices  
 - Streamlined scheduling across Dentrix, Eaglesoft, and Open Dental  
