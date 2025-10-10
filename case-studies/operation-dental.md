@@ -10,12 +10,12 @@ Operation Dental is a people-first dental group with 18+ practices (and growing)
 ## The Solution
 Operation Dental implemented the **Synchronizer API** to rebuild its online scheduler directly into each practice’s website.
 
-This gave their team flexibility over how patients book appointments, how availability syncs across systems, and how each new practice launches—all within a **HIPAA-compliant environment**.
+This gave their team flexibility over how patients book appointments, how availability syncs across systems, and how each new practice launches all within a **HIPAA-compliant environment**.
 
 Working closely with Synchronizer API by NexHealth, Operation Dental’s marketing and technical teams aligned scheduling, operations, and growth strategy under one connected system.
 
 > “That was one of the big drivers for us to rework the scheduler so we could align our investments with real patient growth.”  
-> — **Dave Womble**, Chief Marketing Officer, Operation Dental  
+> **Dave Womble**, Chief Marketing Officer, Operation Dental  
 
 ## Results
 - **10–25% increase** in new patient growth across practices  
