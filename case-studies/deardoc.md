@@ -3,7 +3,7 @@ How DearDoc automated patient scheduling and freed two full-time engineers using
   
 ## About DearDoc
 
-[DearDoc](https://getdeardoc.com) builds growth tools for private practices — AI chat, review management, and high-conversion websites.  Their AI chat product drives thousands of high-intent patient leads every month.
+[DearDoc](https://getdeardoc.com) builds growth tools for private practices such as AI chat, review management, and high-conversion websites.  Their AI chat product drives thousands of high-intent patient leads every month.
 
 The challenge? Those leads still required **manual entry** into each practice’s **Practice Management System (PMS)**,  Dentrix, Eaglesoft, Open Dental, and others, creating bottlenecks and wasted time.
 
@@ -22,7 +22,7 @@ They needed a **reliable, two-way sync** (read/write) to move booked appointment
 
 ## The Solution
 
-DearDoc implemented **[Synchronizer](https://synchronizer.io)** — an API integration layer purpose-built for healthcare.  
+DearDoc implemented **[Synchronizer](https://synchronizer.io)**  an API integration layer purpose-built for healthcare.  
 Synchronizer handles normalization, sync reliability, and PMS-specific logic out of the box.
 
 That allowed DearDoc to:
