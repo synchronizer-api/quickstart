@@ -19,6 +19,8 @@
   
 - **[Developer Portal](https://developers.nexhealth.com/signup) - Sign up to access your API keys, credentials, and full documentation.**
 
+- **[Appointment Quickstart](https://app.storylane.io/share/ox5a1nxuetyt) - Your guided, step-by-step walkthrough of appointment setup**
+  
 - **[Quickstart walkthrough in 3 minutes](https://www.loom.com/share/e541491c076c4003b61528b052e3c96f)**
 
 Here you will find a complete example of a simple online booking interface that uses the NexHealth Synchronizer API to schedule appointments.
