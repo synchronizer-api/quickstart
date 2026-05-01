@@ -44,7 +44,6 @@ Synchronizer supports a wide range of dental platforms, including:
 - Eaglesoft
 - Open Dental (Cloud + On-Prem)
 - Curve Dental
-- Carestack
 - Denticon
 - And more
 
