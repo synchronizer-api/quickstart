@@ -88,7 +88,7 @@ const AddPatient = ({
                 </option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
-                <option value="other">Other</option>
+                <option value="Other">Other</option>
               </select>
             </div>
           </div>

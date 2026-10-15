@@ -16,15 +16,15 @@ import styles from "./styles.module.css";
 
 const AppointmentBookingForm = React.forwardRef((props, ref) => {
   const {
-    apptCategories,
+    apptTypes,
     onFetchSlots,
     onPatientTypeChange,
     onProviderSelected,
-    onCategorySelected,
+    onTypeSelected,
     onOperatorySelected,
     onSubmit,
     operatories,
-    availabilities,
+    workingHours,
     patients,
     providers,
     slots,
@@ -33,7 +33,7 @@ const AppointmentBookingForm = React.forwardRef((props, ref) => {
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [selectedOperatory, setSelectedOperatory] = useState(null);
-  const [selectedApptCategory, setSelectedApptCategory] = useState(null);
+  const [selectedApptType, setSelectedApptType] = useState(null);
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -81,10 +81,10 @@ const AppointmentBookingForm = React.forwardRef((props, ref) => {
   }, [selectedProvider]);
 
   useEffect(() => {
-    if (selectedApptCategory) {
-      onCategorySelected(selectedApptCategory);
+    if (selectedApptType) {
+      onTypeSelected(selectedApptType);
     }
-  }, [selectedApptCategory]);
+  }, [selectedApptType]);
 
   useEffect(() => {
     if (selectedOperatory) {
@@ -130,15 +130,13 @@ const AppointmentBookingForm = React.forwardRef((props, ref) => {
   const disabledDays = useMemo(() => {
     let disabledDays = [];
 
-    if (availabilities.length && selectedOperatory) {
-      const availableDays = availabilities
+    if (workingHours.length && selectedOperatory) {
+      const availableDays = workingHours
         .filter(
           (op) =>
             op.operatory_id === +selectedOperatory &&
             op.provider_id === +selectedProvider &&
-            op.appointment_types.some(
-              (type) => type.id === +selectedApptCategory
-            )
+            op.appointment_types.some((type) => type.id === +selectedApptType)
         )
         .flatMap((op) => op.days);
 
@@ -152,7 +150,7 @@ const AppointmentBookingForm = React.forwardRef((props, ref) => {
     }
 
     return disabledDays;
-  }, [availabilities.length, selectedOperatory]);
+  }, [workingHours.length, selectedOperatory]);
 
   /** Checks whether the form can be submitted or not */
   const canSubmit = useMemo(
@@ -177,10 +175,10 @@ const AppointmentBookingForm = React.forwardRef((props, ref) => {
     setSelectedProvider(ev.target.value);
 
     setSelectedOperatory("");
-    setSelectedApptCategory("");
+    setSelectedApptType("");
     setSelectedSlot(null);
     formRef.current.querySelector("#slot").selectedIndex = 0;
-    formRef.current.querySelector("#appt-category").selectedIndex = 0;
+    formRef.current.querySelector("#appt-type").selectedIndex = 0;
   };
 
   /** 🏥 handler for operatory selection */
@@ -192,9 +190,9 @@ const AppointmentBookingForm = React.forwardRef((props, ref) => {
     formRef.current.querySelector("#slot").selectedIndex = 0;
   };
 
-  /** ⌚ handler for appointment category selection */
-  const handleApptCategorySelection = (ev) => {
-    setSelectedApptCategory(ev.target.value);
+  /** ⌚ handler for appointment type selection */
+  const handleApptTypeSelection = (ev) => {
+    setSelectedApptType(ev.target.value);
     setSelectedDate(null);
     setSelectedOperatory("");
     setSelectedSlot(null);
@@ -258,6 +256,9 @@ const AppointmentBookingForm = React.forwardRef((props, ref) => {
             patient_id: +selectedPatient,
           };
         } else {
+          // The API books a new patient as a dependent: `is_guardian: true`
+          // plus a nested `patient` object, with `patient_id` pointing at the
+          // guardian. This demo uses the first listed patient as the guardian.
           patientData = {
             is_guardian: true,
             patient_id: +patients[0].id,
@@ -273,10 +274,8 @@ const AppointmentBookingForm = React.forwardRef((props, ref) => {
             ...patientData,
             provider_id: +selectedProvider,
             operatory_id: +selectedOperatory,
-            appointment_type_id: +selectedApptCategory,
+            appointment_type_id: +selectedApptType,
             start_time: selectedSlot,
-            confirmed: true,
-            patient_confirmed: true,
             note: notes,
           },
         });
@@ -312,11 +311,11 @@ const AppointmentBookingForm = React.forwardRef((props, ref) => {
           handleOperatorySelection={handleOperatorySelection}
           handleProviderSelection={handleProviderSelection}
           handleSlotSelection={handleSlotSelection}
-          handleApptCategorySelection={handleApptCategorySelection}
+          handleApptTypeSelection={handleApptTypeSelection}
           operatories={operatories}
           patientType={patientType}
           providers={providers}
-          apptCategories={apptCategories}
+          apptTypes={apptTypes}
           ref={bookingFieldsRef}
           slots={slots}
           selectedDate={selectedDate}

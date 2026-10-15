@@ -2,32 +2,28 @@ import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { apiGET } from "../../api-helpers";
 import styles from "../../common-styles/list.module.css";
 import { HomeContext } from "../../helpers/protected-route";
-import { removeDuplicates } from "./../../utils";
-import { ListItem } from "./availabilities-list-item";
+import { ListItem } from "./working-hours-list-item";
 
 const API = process.env.REACT_APP_API;
 
-const AvailabilitiesList = ({ availabilities = [], onDelete }) => {
+const WorkingHoursList = ({ workingHours = [], onDelete }) => {
   const queriedOperatories = useRef({});
   const { onError } = useContext(HomeContext);
 
   const [operatoriesDetails, setOperatoriesDetails] = useState({});
 
   const onDeleteClick = (id) => {
-    window.confirm("Are you sure you want to delete this availability?") &&
+    window.confirm("Are you sure you want to delete these working hours?") &&
       onDelete(id);
   };
 
   const getOperatoryDetails = useCallback(async (id) => {
     apiGET({
       url: `${API}/operatories/${id}`,
-      onSuccess: ({ name, appt_categories }) => {
+      onSuccess: ({ name }) => {
         setOperatoriesDetails((prev) => ({
           ...prev,
-          [id]: {
-            name,
-            appt_categories: removeDuplicates(appt_categories),
-          },
+          [id]: { name },
         }));
       },
       onError,
@@ -35,9 +31,9 @@ const AvailabilitiesList = ({ availabilities = [], onDelete }) => {
   }, []);
 
   useEffect(() => {
-    if (availabilities.length) {
-      availabilities.forEach((availability) => {
-        availability.details.forEach((detail) => {
+    if (workingHours.length) {
+      workingHours.forEach((workingHour) => {
+        workingHour.details.forEach((detail) => {
           const { operatory_id } = detail;
 
           if (!(operatory_id in queriedOperatories.current)) {
@@ -47,27 +43,26 @@ const AvailabilitiesList = ({ availabilities = [], onDelete }) => {
         });
       });
     }
-  }, [availabilities.length]);
+  }, [workingHours.length]);
 
   return (
     <>
-      {availabilities.length > 0 && (
+      {workingHours.length > 0 && (
         <ul className={styles.list}>
           {/* headers */}
           <li className={styles.list_headers}>
             <div className={styles.list_header}>Name</div>
-            <div className={styles.list_header}>Availability</div>
+            <div className={styles.list_header}>Working Hours</div>
             <div></div>
           </li>
 
-          {/* availabilities */}
-          {availabilities.map((availability) => (
+          {/* working hours */}
+          {workingHours.map((workingHour) => (
             <ListItem
-              {...availability}
+              {...workingHour}
               onDeleteClick={onDeleteClick}
-              key={availability.id}
+              key={workingHour.id}
               operatoryDetails={operatoriesDetails}
-              availabilityDetails={availability.details}
             />
           ))}
         </ul>
@@ -76,4 +71,4 @@ const AvailabilitiesList = ({ availabilities = [], onDelete }) => {
   );
 };
 
-export { AvailabilitiesList };
+export { WorkingHoursList };

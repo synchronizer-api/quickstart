@@ -46,7 +46,7 @@
   grid-gap: 0.5rem;
 }
 
-.appointment_categories {
+.appointment_types {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 0.5rem;

@@ -23,7 +23,7 @@ const API = process.env.REACT_APP_API;
 const BookingContainer = () => {
   const [patients, setPatients] = useState([]);
   const [providers, setProviders] = useState([]);
-  const [availabilities, setAvailabilities] = useState([]);
+  const [workingHours, setWorkingHours] = useState([]);
   const [operatories, setOperatories] = useState([]);
 
   const [availOperatories, setAvailOperatories] = useState([]);
@@ -34,7 +34,7 @@ const BookingContainer = () => {
   const formRef = useRef(null);
 
   const reset = () => {
-    setAvailabilities([]);
+    setWorkingHours([]);
     setSlots([]);
     setAvailOperatories([]);
   };
@@ -72,7 +72,7 @@ const BookingContainer = () => {
     const params = new URLSearchParams();
     params.append("locationId", locationId);
     params.append("providerId", providerId);
-    params.append("startDate", startDate);
+    params.append("startDate", dayjs(startDate).format("YYYY-MM-DD"));
     params.append("operatoryId", operatoryId);
 
     apiGET({
@@ -97,10 +97,10 @@ const BookingContainer = () => {
       setShowOverlayLoader(true);
 
       apiGET({
-        url: `${API}/availabilities/provider/${providerId}`,
+        url: `${API}/working-hours/provider/${providerId}`,
         onSuccess: (data) => {
           setShowOverlayLoader(false);
-          setAvailabilities(data);
+          setWorkingHours(data);
         },
         onError,
       });
@@ -110,15 +110,15 @@ const BookingContainer = () => {
     }
   };
 
-  const onCategorySelected = useCallback(
-    (categoryId) => {
+  const onTypeSelected = useCallback(
+    (typeId) => {
       try {
         setSlots([]);
-        const selected = availabilities
-          .filter((avail) =>
-            avail.appointment_types.some((type) => type.id === +categoryId)
+        const selected = workingHours
+          .filter((hours) =>
+            hours.appointment_types.some((type) => type.id === +typeId)
           )
-          .map((avail) => avail.operatory_id);
+          .map((hours) => hours.operatory_id);
 
         const deDupedOperatories = [...new Set(selected)];
 
@@ -128,7 +128,7 @@ const BookingContainer = () => {
         onError(error);
       }
     },
-    [operatories.length, availabilities.length]
+    [operatories.length, workingHours.length]
   );
 
   const onOperatorySelected = useCallback(() => {
@@ -148,7 +148,7 @@ const BookingContainer = () => {
         url: `${API}/${type}`,
         onSuccess: (data) => {
           if (type === "patients") {
-            setPatients(data.patients);
+            setPatients(data);
           } else if (type === "providers") {
             setProviders(
               data.map((provider) => ({
@@ -170,15 +170,13 @@ const BookingContainer = () => {
     fetchData("operatories");
   }, []);
 
-  const apptCategories = useMemo(() => {
-    const operatoriesFlat = availabilities.flatMap(
-      (availability) => availability.appointment_types
-    );
+  const apptTypes = useMemo(() => {
+    const typesFlat = workingHours.flatMap((hours) => hours.appointment_types);
 
-    return removeDuplicates(operatoriesFlat);
-  }, [availabilities.length]);
+    return removeDuplicates(typesFlat);
+  }, [workingHours.length]);
 
-  apptCategories.displayName = "apptCategories";
+  apptTypes.displayName = "apptTypes";
 
   return (
     <div className={styles.booking_container}>
@@ -186,12 +184,12 @@ const BookingContainer = () => {
         patients={patients}
         providers={providers}
         operatories={filteredOperatories}
-        availabilities={availabilities}
-        apptCategories={apptCategories}
+        workingHours={workingHours}
+        apptTypes={apptTypes}
         onSubmit={onSubmit}
         onFetchSlots={handleFetchSlots}
         onProviderSelected={onProviderSelected}
-        onCategorySelected={onCategorySelected}
+        onTypeSelected={onTypeSelected}
         onOperatorySelected={onOperatorySelected}
         slots={slots}
         onPatientTypeChange={handlePatientTypeChange}

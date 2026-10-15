@@ -6,9 +6,9 @@ import { Select } from "../../components/select";
 
 const Fields = React.forwardRef((props, ref) => {
   const {
-    apptCategories = [],
+    apptTypes = [],
     disabledDays = [],
-    handleApptCategorySelection,
+    handleApptTypeSelection,
     handleDateSelection,
     handleNotesChange,
     handleOperatorySelection,
@@ -23,11 +23,9 @@ const Fields = React.forwardRef((props, ref) => {
 
   const locationRef = useRef(null);
   const providerRef = useRef(null);
-  const apptCategoryRef = useRef(null);
-  // const [selectedDay, setSelectedDay] = useState(null);
+  const apptTypeRef = useRef(null);
 
   const resetFields = () => {
-    // setSelectedDay(null);
     locationRef.current.reset();
     providerRef.current.reset();
   };
@@ -61,12 +59,12 @@ const Fields = React.forwardRef((props, ref) => {
 
       <div className={commonStyles.form_field}>
         <Select
-          label="Appointment Category"
-          options={apptCategories}
-          onChange={handleApptCategorySelection}
-          id="appt-category"
-          placeholder="Select an appointment category"
-          ref={apptCategoryRef}
+          label="Appointment Type"
+          options={apptTypes}
+          onChange={handleApptTypeSelection}
+          id="appt-type"
+          placeholder="Select an appointment type"
+          ref={apptTypeRef}
         />
       </div>
 
@@ -82,7 +80,7 @@ const Fields = React.forwardRef((props, ref) => {
         />
       </div>
 
-      {/* provider */}
+      {/* date */}
       <div className={commonStyles.form_field}>
         <label className={commonStyles.label} htmlFor="provider">
           Choose a date
