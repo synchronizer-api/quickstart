@@ -33,8 +33,11 @@ _Frontend + backend example using Synchronizer to power real-time appointment bo
 
 See how real-world dental groups are using Synchronizer:
 
-- [Dentina](./case-studies/dentina.md)  
+- [Dentina](./case-studies/dentina.md)
 - [All Star Pediatric Dentistry](./case-studies/all-star-pediatric-dentistry.md)
+- [Operation Dental](./case-studies/operation-dental.md)
+- [DearDoc](./case-studies/deardoc.md)
+- [DearDoc × Sartini Dentistry](./case-studies/deardoc-sartini-case-study.md)
 
 ## Supported Practice Management Systems
 
@@ -47,17 +50,15 @@ Synchronizer supports a wide range of dental platforms, including:
 - Denticon
 - And more
 
-[Getting started](#getting-started)
-
-[Prerequisites](#prerequisites)
-
-[Clone the repository](#clone-the-repository)
-
-[Configuration](#configuration)
-
-[Installation](#installation)
-
-[Starting the Node server and Frontend app](#starting-the-node-server-and-frontend-app)
+- [Getting started](#getting-started)
+- [API version and endpoints used](#api-version-and-endpoints-used)
+- [Prerequisites](#prerequisites)
+- [Clone the repository](#clone-the-repository)
+- [Configuration](#configuration)
+- [Installation](#installation)
+- [Starting the Node server](#starting-the-node-server)
+- [Starting the Frontend app](#starting-the-frontend-app)
+- [Performance](#performance)
 
 ## Getting started
 
@@ -65,9 +66,22 @@ Skip the API setup headaches and get hands-on with [NexHealth's Synchronizer API
 
 Clone, configure your API key, and start booking real appointments through working examples of appointment creation, provider management, and patient scheduling that you can customize for your healthcare application.
 
+## API version and endpoints used
+
+This app targets **Synchronizer API v3.0.0**. The Node server sends the `Nex-Api-Version: v3.0.0` header on every request (see `server/utils.js`), so your API key must be enabled for v3. Keys issued today reject the deprecated v2 API.
+
+| UI feature | Endpoints |
+| :--- | :--- |
+| Login | `POST /authenticates`, `GET /locations` |
+| Appointments list and cancel | `GET /appointments`, `GET /patients/{id}`, `PATCH /appointments/{id}` |
+| Book appointment | `GET /patients`, `GET /providers`, `GET /operatories`, `GET /working_hours`, `GET /available_slots`, `POST /appointments` |
+| Appointment types | `GET`, `POST`, `DELETE /appointment_types` |
+| Provider working hours | `GET`, `POST`, `DELETE /working_hours`, `GET /providers/{id}`, `GET /operatories/{id}` |
+
+If you are coming from v2, note that `availabilities` became `working_hours`, `appointment_slots` became `available_slots`, and offset paging (`page`) was replaced by cursors. See the [v2 to v3 migration guide](https://docs.nexhealth.com/docs/api-v2-to-v20240412-migration-guide) and the [API reference](https://docs.nexhealth.com/reference/introduction).
 
 ## Prerequisites
-- Node.js 18.x or higher (20.x recommended) ([Download here](https://nodejs.org/))
+- Node.js 18.x or higher ([Download here](https://nodejs.org/)). Tested on 20.x and 26.x; `.nvmrc` pins 20, so `nvm use` picks it up.
 - npm 9.x or higher
 - Opendental test server configured ([Guide here](https://docs.nexhealth.com/docs/setting-up-an-open-dental-test-server))
 
@@ -77,47 +91,46 @@ Clone, configure your API key, and start booking real appointments through worki
 Using https:
 
 ```sh
-git clone https://github.com/nex-health/api-quickstart.git
-cd api-quickstart
+git clone https://github.com/synchronizer-api/quickstart.git
+cd quickstart
 ```
 
 Alternatively, if you use ssh:
 
 ```sh
-git clone git@github.com:nex-health/api-quickstart.git
-cd api-quickstart
+git clone git@github.com:synchronizer-api/quickstart.git
+cd quickstart
 ```
 
 ## Configuration
 
 1. To request access to the [NexHealth API](https://docs.nexhealth.com/reference/introduction), fill out this [form](https://www.nexhealth.com/api-request/request-access). You should receive a **subdomain**, a **location_id**, and an **API Key**.
 
-2. Populate an `.env` file in `server/` with the credentials from above.
+2. From the repository root, create an `.env` file in `server/` with the credentials from above.
 
 ```sh
-cd NexHealth
-touch server/.env
+cp server/.env.example server/.env
 ```
 
 Add values for the below properties:
 
 | Properties  | Description                                                     |
 | :---------- | :-------------------------------------------------------------- |
-| API_URL     | Sandbox url e.g: https://sandbox.nexhealth.com |
+| API_URL     | NexHealth API base URL: `https://nexhealth.info`               |
 | SUBDOMAIN   | Refers to a specific institution                                |
 | LOCATION_ID | Refers to a specific location                                   |
-| API_KEY     | API Key provided by NexHealth                                   |
-
-Please use the sample `.env.example` located under the `server/` folder as a template.
+| API_KEY     | API Key provided by NexHealth (must be enabled for API v3.0.0)  |
 
 ```sh
-API_URL=https://sandbox.nexhealth.com
+API_URL=https://nexhealth.info
 SUBDOMAIN=xxxx
 LOCATION_ID=xxxx
 API_KEY=xxxx
 ```
 
 > Note: `.env` files are convenient for local development. Do not run production applications using .env files.
+
+> Note: nodemon only watches `.js` files. If you edit `server/.env` while the server is running, type `rs` in the server terminal (or restart it) to load the new values.
 
 Please contact the NexHealth team if you have any questions about these values.
 
@@ -147,16 +160,16 @@ npm run start
 If everything is working, you should see the following message:
 
 ```sh
-[nodemon] reading config .\nodemon.json
+[nodemon] reading config ./nodemon.json
 [nodemon] to restart at any time, enter `rs`
 [nodemon] or send SIGHUP to 14688 to restart
 [nodemon] ignoring: .git node_modules/**/node_modules
-[nodemon] watching path(s): *.js routers\*.js
+[nodemon] watching path(s): *.js routers/*.js
 [nodemon] watching extensions: js,json
 [nodemon] starting `node --harmony index.js`
 [nodemon] spawning
 [nodemon] child pid: 11036
-[nodemon] watching 8 files
+[nodemon] watching 10 files
 Server is running on port 4000
 ```
 
