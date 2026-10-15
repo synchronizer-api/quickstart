@@ -56,7 +56,12 @@ const ProtectedRoute = ({ children }) => {
             setIsAuthenticated(true);
           } else {
             setAuthFailed(true);
-            setFailedMessage(FAILURE_MESSAGES.ACCESS_FORBIDDEN);
+            const reason = [].concat(locationsResponse.error || []).join(" ");
+            setFailedMessage(
+              `${FAILURE_MESSAGES.ACCESS_FORBIDDEN}${
+                reason ? `<br>Reason: ${reason}` : ""
+              }`
+            );
           }
         } else {
           navigation("/login");
