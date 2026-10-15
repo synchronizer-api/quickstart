@@ -2,15 +2,13 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
 import session from "express-session";
-import url from "url";
-import { appointmentCategoriesRouter } from "./routers/appointment-categories-router.js";
 import { appointmentRouter } from "./routers/appointment-router.js";
+import { appointmentTypesRouter } from "./routers/appointment-types-router.js";
 import { authRouter } from "./routers/auth-router.js";
-import { availabilitiesRouter } from "./routers/availabilities-router.js";
 import { router } from "./routers/common-router.js";
 import { operatoriesRouter } from "./routers/operatories-router.js";
 import { providersRouter } from "./routers/providers-router.js";
-import serverConfig from "./server-config.js";
+import { workingHoursRouter } from "./routers/working-hours-router.js";
 
 const app = express();
 
@@ -25,11 +23,9 @@ app.use(bodyParser.json());
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,PATCH,DELETE");
   next();
 });
-
-serverConfig();
 
 app.use(
   session({
@@ -39,17 +35,22 @@ app.use(
   })
 );
 
-app.use(function (req, res, next) {
-  const path = url.parse(req.url).pathname;
+// Routes that work without a NexHealth bearer token in the session.
+const PUBLIC_PATHS = new Set([
+  "/api/auth",
+  "/api/auth/logout",
+  "/api/auth/is-authenticated",
+]);
 
-  if (path === "/api/auth" || path === "api/auth/is-authenticated") {
-    next();
-  } else if (req.session.token) {
+app.use(function (req, res, next) {
+  if (PUBLIC_PATHS.has(req.path) || req.session.token) {
     next();
   } else {
-    res.json({
-      code: "false",
-      error: "You are not authorized to access this resource",
+    res.status(401).json({
+      code: false,
+      description: null,
+      data: null,
+      error: ["You are not authorized to access this resource"],
     });
   }
 });
@@ -57,10 +58,22 @@ app.use(function (req, res, next) {
 app.use("/api", router);
 app.use("/api/auth", authRouter);
 app.use("/api/appointments", appointmentRouter);
-app.use("/api/appointment-categories", appointmentCategoriesRouter);
-app.use("/api/availabilities", availabilitiesRouter);
+app.use("/api/appointment-types", appointmentTypesRouter);
+app.use("/api/working-hours", workingHoursRouter);
 app.use("/api/providers", providersRouter);
 app.use("/api/operatories", operatoriesRouter);
+
+// Anything thrown by a route (network errors, bad upstream responses) ends up
+// here instead of leaving the request hanging.
+app.use(function (err, req, res, next) {
+  console.error(err);
+  res.status(502).json({
+    code: false,
+    description: null,
+    data: null,
+    error: [err.message || "Request to the NexHealth API failed"],
+  });
+});
 
 app.listen(4000, () => {
   console.log("Server is running on port 4000");
