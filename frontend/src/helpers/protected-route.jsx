@@ -54,6 +54,10 @@ const ProtectedRoute = ({ children }) => {
           if (locationsResponse.code) {
             setLocations(locationsResponse.data);
             setIsAuthenticated(true);
+          } else if (locations.status === 401) {
+            // the session's bearer token is no longer valid: log in again
+            await getData(`${process.env.REACT_APP_API}/auth/logout`);
+            navigation("/login");
           } else {
             setAuthFailed(true);
             const reason = [].concat(locationsResponse.error || []).join(" ");
