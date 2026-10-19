@@ -1,55 +1,30 @@
 import { Router } from "express";
-import fetch from "node-fetch";
-import { URLSearchParams } from "url";
-import serverConfig from "../server-config.js";
-import { getHeaders } from "../utils.js";
+import { asyncRoute, nexFetch, nexParams, proxy } from "../utils.js";
 
 const providersRouter = Router();
 
-serverConfig();
-
-const nexHealthParams = {
-  subdomain: process.env.SUBDOMAIN,
-  location_id: process.env.LOCATION_ID,
-};
-
-providersRouter.get("/", async (req, res) => {
-  try {
-    const params = new URLSearchParams({
-      ...nexHealthParams,
-      page: 1,
-      per_page: 50,
+providersRouter.get(
+  "/",
+  asyncRoute(async (req, res) => {
+    const result = await nexFetch("/providers", {
+      token: req.session.token,
+      query: { ...nexParams(), per_page: 50 },
     });
 
-    const response = await fetch(`${process.env.API_URL}/providers?${params}`, {
-      headers: getHeaders(false, req.session.token),
-    });
-    const providers = await response.json();
-    res.json(providers);
-  } catch (error) {
-    console.log(error);
-  }
-});
+    proxy(res, result);
+  })
+);
 
-providersRouter.get("/:id", async (req, res) => {
-  try {
-    const params = new URLSearchParams({
-      ...nexHealthParams,
-      page: 1,
-      per_page: 50,
+providersRouter.get(
+  "/:id",
+  asyncRoute(async (req, res) => {
+    const result = await nexFetch(`/providers/${req.params.id}`, {
+      token: req.session.token,
+      query: { subdomain: nexParams().subdomain },
     });
 
-    const response = await fetch(
-      `${process.env.API_URL}/providers/${req.params.id}?${params}`,
-      {
-        headers: getHeaders(false, req.session.token),
-      }
-    );
-    const provider = await response.json();
-    res.json(provider);
-  } catch (error) {
-    console.log(error);
-  }
-});
+    proxy(res, result);
+  })
+);
 
 export { providersRouter };

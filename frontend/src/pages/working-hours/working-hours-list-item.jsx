@@ -3,7 +3,7 @@ import { apiGET } from "../../api-helpers";
 import styles from "../../common-styles/list.module.css";
 import { HomeContext } from "../../helpers/protected-route";
 import TrashIcon from "../../icons/trash";
-import availabilityStyles from "./styles.module.css";
+import workingHoursStyles from "./styles.module.css";
 
 const API = process.env.REACT_APP_API;
 
@@ -35,18 +35,18 @@ const ListItem = ({
     getProviderDetails();
   }, [provider_id]);
 
-  const getAvailabilityContent = useMemo(
+  const getWorkingHoursContent = useMemo(
     () =>
       name && (
         <ul style={{ padding: 0, margin: 0, width: "100%" }}>
-          <li className={availabilityStyles.grid_item}>
-            <div className={availabilityStyles.grid_cell}>Operatory</div>
-            <div className={availabilityStyles.grid_cell}>Days</div>
-            <div className={availabilityStyles.grid_cell}>Timings</div>
-            <div className={availabilityStyles.grid_cell}>
-              Appointment Category
+          <li className={workingHoursStyles.grid_item}>
+            <div className={workingHoursStyles.grid_cell}>Operatory</div>
+            <div className={workingHoursStyles.grid_cell}>Days</div>
+            <div className={workingHoursStyles.grid_cell}>Timings</div>
+            <div className={workingHoursStyles.grid_cell}>
+              Appointment Types
             </div>
-            <div className={availabilityStyles.grid_cell}></div>
+            <div className={workingHoursStyles.grid_cell}></div>
           </li>
           {details.map(
             (
@@ -60,23 +60,23 @@ const ListItem = ({
               index
             ) =>
               operatoryDetails[operatory_id] && (
-                <li key={id} className={availabilityStyles.grid_item}>
-                  <div className={availabilityStyles.grid_cell}>
+                <li key={id} className={workingHoursStyles.grid_item}>
+                  <div className={workingHoursStyles.grid_cell}>
                     {operatoryDetails[operatory_id].name}
                   </div>
-                  <div className={availabilityStyles.grid_cell}>
+                  <div className={workingHoursStyles.grid_cell}>
                     {days.map((day) => day.slice(0, 3)).join(", ")}
                   </div>
                   <div
-                    className={availabilityStyles.grid_cell}
+                    className={workingHoursStyles.grid_cell}
                   >{`${beginTime} - ${endTime}`}</div>
-                  <div className={availabilityStyles.grid_cell}>
+                  <div className={workingHoursStyles.grid_cell}>
                     {appointment_types.map((type) => type.name).join(", ")}
                   </div>
-                  <div className={availabilityStyles.grid_cell}>
+                  <div className={workingHoursStyles.grid_cell}>
                     <button
                       onClick={() => onDeleteClick(id)}
-                      className={availabilityStyles.delete_button_wrapper}
+                      className={workingHoursStyles.delete_button_wrapper}
                     >
                       <TrashIcon />
                     </button>
@@ -90,10 +90,10 @@ const ListItem = ({
   );
 
   return (
-    getAvailabilityContent && (
+    getWorkingHoursContent && (
       <li key={id} className={styles.item}>
         <div className={styles.item_field}>{name}</div>
-        <div className={styles.item_field}>{getAvailabilityContent}</div>
+        <div className={styles.item_field}>{getWorkingHoursContent}</div>
       </li>
     )
   );

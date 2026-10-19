@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { apiGET } from "../../api-helpers";
 import { Loader } from "../../components/loader";
 import { HomeContext } from "../../helpers/protected-route";
-import { AvailabilitiesList } from "./availabilities-list";
 import styles from "./styles.module.css";
+import { WorkingHoursList } from "./working-hours-list";
 
 const API = process.env.REACT_APP_API;
 
@@ -44,23 +44,23 @@ function parseData(data) {
   return Object.keys(parsedResult).map((key) => parsedResult[key]);
 }
 
-const Availabilities = () => {
-  const [availabilities, setAvailabilities] = useState([]);
+const WorkingHours = () => {
+  const [workingHours, setWorkingHours] = useState([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
 
   const [refetch, setRefetch] = useState(0);
   const { onError } = useContext(HomeContext);
 
   useEffect(() => {
-    const fetchAvailabilities = async () => {
+    const fetchWorkingHours = async () => {
       try {
         setIsLoadingData(true);
 
         apiGET({
-          url: `${API}/availabilities`,
+          url: `${API}/working-hours`,
           onSuccess: (data) => {
             setIsLoadingData(false);
-            setAvailabilities(parseData(data));
+            setWorkingHours(parseData(data));
           },
           onError,
         });
@@ -70,13 +70,13 @@ const Availabilities = () => {
       }
     };
 
-    fetchAvailabilities();
+    fetchWorkingHours();
   }, [refetch]);
 
   const handleDelete = (id) => {
     try {
-      const deleteAvailability = async (id) => {
-        const request = await fetch(`${API}/availabilities/delete/${id}`, {
+      const deleteWorkingHours = async (id) => {
+        const request = await fetch(`${API}/working-hours/delete/${id}`, {
           credentials: "include",
           method: "DELETE",
         });
@@ -88,30 +88,30 @@ const Availabilities = () => {
         }
       };
 
-      deleteAvailability(id);
+      deleteWorkingHours(id);
     } catch (error) {
       onError(error);
     }
   };
 
   return (
-    <div className={styles.availabilities}>
+    <div className={styles.working_hours}>
       <div className={styles.list_wrapper}>
         {isLoadingData ? (
           <div className={styles.loader_wrapper}>
             <Loader />
           </div>
-        ) : availabilities.length ? (
-          <AvailabilitiesList
-            availabilities={availabilities}
+        ) : workingHours.length ? (
+          <WorkingHoursList
+            workingHours={workingHours}
             onDelete={handleDelete}
           />
         ) : (
-          <span className={styles.no_data}>No Availabilities found</span>
+          <span className={styles.no_data}>No working hours found</span>
         )}
       </div>
     </div>
   );
 };
 
-export { Availabilities };
+export { WorkingHours };
