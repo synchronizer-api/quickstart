@@ -5,10 +5,10 @@
   justify-content: flex-start;
   width: 95%;
   background: #fff;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 0;
   margin: 0;
-  box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.06);
   overflow-y: auto;
   padding-bottom: 1rem;
 }
@@ -24,16 +24,48 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.filter_field label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+/* the native datetime-local inputs carry no class, so style them here */
+.filter_field input {
+  font: inherit;
+  font-size: 0.9rem;
+  color: #111827;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.filter_field input:hover {
+  border-color: #9ca3af;
+}
+
+.filter_field input:focus {
+  border-color: #1e90ff;
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
+  outline: 0;
 }
 
 .filter_fields {
   display: flex;
-  padding: 0.5rem;
+  gap: 1rem;
   width: 100%;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-start;
   padding: 1rem;
-  border-radius: 6px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .no_appointments {
@@ -42,7 +74,7 @@
 }
 
 .appointments_list_wrapper {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   width: 100%;
   max-height: 75vh;
   min-height: 650px;

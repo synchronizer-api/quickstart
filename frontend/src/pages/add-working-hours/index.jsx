@@ -17,18 +17,15 @@ const days = [
   "Sunday",
 ];
 
-const CreateAvailability = () => {
+const AddWorkingHours = () => {
   const [providers, setProviders] = useState([]);
   const [operatories, setOperatories] = useState([]);
-  const [appointmentCategories, setAppointmentCategories] = useState([]);
+  const [appointmentTypes, setAppointmentTypes] = useState([]);
 
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [selectedOperatory, setSelectedOperatory] = useState(null);
   const [selectedDays, setSelectedDays] = useState([]);
-  const [
-    selectedAppointmentCategory,
-    setSelectedAppointmentCategory,
-  ] = useState([]);
+  const [selectedAppointmentTypes, setSelectedAppointmentTypes] = useState([]);
 
   const [selectedStartTime, setSelectedStartTime] = useState(null);
   const [selectedEndTime, setSelectedEndTime] = useState(null);
@@ -52,9 +49,9 @@ const CreateAvailability = () => {
 
   const handleSelectEndTime = (ev) => setSelectedEndTime(ev.target.value);
 
-  const handleSelectedAppointmentCategory = (ev) => {
+  const handleSelectedAppointmentTypes = (ev) => {
     const options = Array.from(ev.target.options);
-    setSelectedAppointmentCategory(
+    setSelectedAppointmentTypes(
       options.filter((option) => option.selected).map((v) => +v.value)
     );
   };
@@ -93,12 +90,12 @@ const CreateAvailability = () => {
       }
     };
 
-    const getAppointmentCategories = async () => {
+    const getAppointmentTypes = async () => {
       try {
         apiGET({
-          url: `${process.env.REACT_APP_API}/appointment-categories`,
+          url: `${process.env.REACT_APP_API}/appointment-types`,
           onSuccess: (data) => {
-            setAppointmentCategories(data);
+            setAppointmentTypes(data);
           },
           onError,
         });
@@ -109,7 +106,7 @@ const CreateAvailability = () => {
 
     getProviders();
     getOperatories();
-    getAppointmentCategories();
+    getAppointmentTypes();
   }, []);
 
   /** resets the form */
@@ -118,7 +115,7 @@ const CreateAvailability = () => {
     if (formRef.current) {
       formRef.current.reset();
       const selects = formRef.current.querySelectorAll("select");
-      setSelectedAppointmentCategory([]);
+      setSelectedAppointmentTypes([]);
       setSelectedDays([]);
       setSelectedEndTime(null);
       setSelectedOperatory(null);
@@ -137,7 +134,7 @@ const CreateAvailability = () => {
       selectedStartTime &&
       selectedEndTime &&
       selectedOperatory &&
-      selectedAppointmentCategory.length &&
+      selectedAppointmentTypes.length &&
       selectedProvider,
     [
       selectedDays.length,
@@ -145,7 +142,7 @@ const CreateAvailability = () => {
       selectedStartTime,
       selectedEndTime,
       selectedOperatory,
-      selectedAppointmentCategory.length,
+      selectedAppointmentTypes.length,
     ]
   );
 
@@ -153,19 +150,19 @@ const CreateAvailability = () => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
 
-    const createAvailability = async () => {
+    const createWorkingHours = async () => {
       try {
         const request = await postData(
-          `${process.env.REACT_APP_API}/availabilities/create`,
+          `${process.env.REACT_APP_API}/working-hours/create`,
           {
-            availability: {
+            working_hour: {
               active: true,
               begin_time: selectedStartTime,
-              days: selectedDays,
               end_time: selectedEndTime,
-              operatory_id: selectedOperatory,
-              provider_id: selectedProvider,
-              appointment_category_ids: selectedAppointmentCategory,
+              days: selectedDays,
+              operatory_id: +selectedOperatory,
+              provider_id: +selectedProvider,
+              appointment_type_ids: selectedAppointmentTypes,
             },
           }
         );
@@ -174,9 +171,9 @@ const CreateAvailability = () => {
 
         if (result.code) {
           resetForm();
-          alert("Availability created successfully");
+          alert("Working hours created successfully");
         } else {
-          alert(`Availability creation failed!\n${result.error}`);
+          alert(`Working hours creation failed!\n${result.error}`);
         }
       } catch (error) {
         onError(error);
@@ -184,7 +181,7 @@ const CreateAvailability = () => {
     };
 
     if (canSubmit) {
-      createAvailability();
+      createWorkingHours();
     }
   };
 
@@ -230,7 +227,7 @@ const CreateAvailability = () => {
         </div>
         <div className={commonStyles.form_field}>
           <label className={commonStyles.label}>
-            Select the start and end time for the provider availability
+            Select the start and end time for the provider&apos;s working hours
           </label>
           <div className={styles.time_slots}>
             <div className={styles.time_slot}>
@@ -256,11 +253,11 @@ const CreateAvailability = () => {
 
         <div className={commonStyles.form_field}>
           <Select
-            label="Choose Appointment Category"
-            options={appointmentCategories}
-            placeholder="Select a category"
-            id="appointment-category"
-            onChange={handleSelectedAppointmentCategory}
+            label="Choose Appointment Types"
+            options={appointmentTypes}
+            placeholder="Select appointment types"
+            id="appointment-types"
+            onChange={handleSelectedAppointmentTypes}
             multiple
           />
         </div>
@@ -275,7 +272,7 @@ const CreateAvailability = () => {
             disabled={!canSubmit}
             onClick={handleSubmit}
           >
-            Add Availability
+            Add Working Hours
           </button>
           <button onClick={resetForm} className={commonStyles.button}>
             Reset
@@ -286,4 +283,4 @@ const CreateAvailability = () => {
   );
 };
 
-export { CreateAvailability };
+export { AddWorkingHours };

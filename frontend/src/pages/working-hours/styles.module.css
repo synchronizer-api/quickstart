@@ -1,0 +1,103 @@
+.working_hours {
+  width: 95%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  min-height: 650px;
+  padding-bottom: 1rem;
+}
+
+.list_wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  width: 100%;
+  min-height: 200px;
+}
+
+.loader_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  width: 100%;
+}
+
+.no_data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  width: 100%;
+  color: #6b7280;
+}
+
+/* one row of the nested working-hours table */
+.grid_item {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr 2fr 56px;
+  grid-gap: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  min-height: 48px;
+  width: 98%;
+  align-items: center;
+}
+
+.grid_item:first-child {
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  border-radius: 8px 8px 0 0;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.grid_item:last-child {
+  border-radius: 0 0 8px 8px;
+}
+
+.grid_item:not(:first-child):hover {
+  background: #f3f8ff;
+}
+
+.grid_cell {
+  padding: 0.6rem 0.75rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: #111827;
+  overflow-wrap: anywhere;
+}
+
+.grid_cell:nth-child(5) {
+  justify-content: center;
+}
+
+.delete_button_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.delete_button_wrapper:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.delete_button_wrapper svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}

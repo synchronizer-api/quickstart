@@ -3,15 +3,9 @@ import styles from "../../common-styles/list.module.css";
 import { formatDate } from "./../../utils";
 
 const AppointmentsList = ({ appointments = [], onCancel }) => {
-  const handleCancel = (
-    id,
-    patient_id,
-    operatory_id,
-    provider_id,
-    start_time
-  ) => {
+  const handleCancel = (id) => {
     window.confirm("Are you sure you want to cancel this appointment?") &&
-      onCancel(id, patient_id, operatory_id, provider_id, start_time);
+      onCancel(id);
   };
   return (
     <>
@@ -29,13 +23,9 @@ const AppointmentsList = ({ appointments = [], onCancel }) => {
           {appointments.map(
             ({
               id,
-              patient: {name: patient_name},
-              note,
+              patient: { name: patient_name } = {},
               provider_name,
               start_time,
-              patient_id,
-              operatory_id,
-              provider_id,
             }) => (
               <li key={id} className={styles.appointment_list_item}>
                 <div className={styles.item_field}>{patient_name}</div>
@@ -46,15 +36,7 @@ const AppointmentsList = ({ appointments = [], onCancel }) => {
                 <div>
                   <button
                     className={commonStyles.button}
-                    onClick={() =>
-                      handleCancel(
-                        id,
-                        patient_id,
-                        operatory_id,
-                        provider_id,
-                        start_time
-                      )
-                    }
+                    onClick={() => handleCancel(id)}
                   >
                     Cancel Appointment
                   </button>
@@ -71,4 +53,3 @@ const AppointmentsList = ({ appointments = [], onCancel }) => {
 };
 
 export { AppointmentsList };
-

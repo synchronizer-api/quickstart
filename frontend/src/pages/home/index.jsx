@@ -1,21 +1,21 @@
 import classNames from "classnames";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AddAppointmentCategory } from "../add-appointment-category";
-import { CreateAvailability } from "../add-provider-availability";
-import { AppointmentCategories } from "../appointment-categories";
+import { AddAppointmentType } from "../add-appointment-type";
+import { AddWorkingHours } from "../add-working-hours";
+import { AppointmentTypes } from "../appointment-types";
 import { Appointments } from "../appointments";
 import { BookingContainer } from "../book-appointment";
-import { Availabilities } from "../provider-availabilities";
+import { WorkingHours } from "../working-hours";
 import styles from "./styles.module.css";
 
 const tabs = [
   { name: "appointments", label: "Appointments" },
-  { name: "addAppointmentCategory", label: "Add Appointment Category" },
-  { name: "appointmentCategories", label: "Appointment Categories" },
+  { name: "addAppointmentType", label: "Add Appointment Type" },
+  { name: "appointmentTypes", label: "Appointment Types" },
   { name: "booking", label: "Book Appointment" },
-  { name: "availabilities", label: "Provider Availabilities" },
-  { name: "availability", label: "Add Provider Availability" },
+  { name: "workingHours", label: "Provider Working Hours" },
+  { name: "addWorkingHours", label: "Add Working Hours" },
 ];
 
 const Home = () => {
@@ -49,10 +49,10 @@ const Home = () => {
         <div className={styles.tabs_body}>
           {activeTab === "appointments" && <Appointments />}
           {activeTab === "booking" && <BookingContainer />}
-          {activeTab === "availability" && <CreateAvailability />}
-          {activeTab === "availabilities" && <Availabilities />}
-          {activeTab === "addAppointmentCategory" && <AddAppointmentCategory />}
-          {activeTab === "appointmentCategories" && <AppointmentCategories />}
+          {activeTab === "addWorkingHours" && <AddWorkingHours />}
+          {activeTab === "workingHours" && <WorkingHours />}
+          {activeTab === "addAppointmentType" && <AddAppointmentType />}
+          {activeTab === "appointmentTypes" && <AppointmentTypes />}
         </div>
       </section>
     </div>

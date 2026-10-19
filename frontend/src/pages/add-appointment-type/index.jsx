@@ -4,59 +4,40 @@ import { apiPOST } from "../../api-helpers";
 import commonStyles from "../../common-styles/common.module.css";
 import styles from "./styles.module.css";
 
-const AddAppointmentCategory = () => {
+const AddAppointmentType = () => {
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
   const [minutes, setMinutes] = useState("");
 
   const handleNameChange = (e) => setName(e.target.value);
-  const handleCategoryChange = (e) => setCategory(e.target.value);
   const handleMinutesChange = (e) => setMinutes(e.target.value);
 
-  const canSubmit = useMemo(() => name && category && minutes, [
-    name,
-    category,
-    minutes,
-  ]);
+  const canSubmit = useMemo(() => name && minutes, [name, minutes]);
 
   const submitData = async (data) => {
     try {
       await apiPOST({
-        url: `${process.env.REACT_APP_API}/appointment-categories`,
+        url: `${process.env.REACT_APP_API}/appointment-types`,
         data,
         onSuccess() {
           setName("");
-          setCategory("");
           setMinutes("");
-          alert("Appointment category added successfully!");
+          alert("Appointment type added successfully!");
         },
         onError(error) {
-          alert(`Appointment category creation failed!\n${error}`);
+          alert(`Appointment type creation failed!\n${error}`);
         },
       });
-      // const request = await postData(
-      //   `${process.env.REACT_APP_API}/appointment-categories`,
-      //   data
-      // );
-
-      // const result = await request.json();
-
-      // if (result.code) {
-      // } else {
-      //   alert(`Appointment category creation failed!\n${result.error}`);
-      // }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleCreateCategory = (ev) => {
+  const handleCreateType = (ev) => {
     ev.preventDefault();
     if (canSubmit) {
       const payload = {
-        appointment_category: {
+        appointment_type: {
           name,
-          category,
           minutes: +minutes,
           parent_type: "Institution",
           bookable_online: true,
@@ -70,24 +51,14 @@ const AddAppointmentCategory = () => {
     <div className={styles.wrapper}>
       <form className={commonStyles.form}>
         <div className={commonStyles.form_field}>
-          <label htmlFor="category-name">Name</label>
+          <label htmlFor="type-name">Name</label>
           <input
             type="text"
             className={commonStyles.input}
             aria-label="name"
-            id="category-name"
+            id="type-name"
             onChange={handleNameChange}
             value={name}
-          />
-        </div>
-        <div className={commonStyles.form_field}>
-          <label htmlFor="category">Category</label>
-          <input
-            type="text"
-            className={commonStyles.input}
-            aria-label="category"
-            onChange={handleCategoryChange}
-            value={category}
           />
         </div>
         <div className={commonStyles.form_field}>
@@ -106,9 +77,9 @@ const AddAppointmentCategory = () => {
               commonStyles.button,
               !canSubmit ? commonStyles.disabled : ""
             )}
-            onClick={handleCreateCategory}
+            onClick={handleCreateType}
           >
-            Add Category
+            Add Appointment Type
           </button>
         </div>
       </form>
@@ -116,4 +87,4 @@ const AddAppointmentCategory = () => {
   );
 };
 
-export { AddAppointmentCategory };
+export { AddAppointmentType };

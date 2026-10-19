@@ -21,8 +21,12 @@ const Appointments = () => {
   const fetchAppointments = async (startDate, endDate) => {
     try {
       setIsLoadingData(true);
+      const params = new URLSearchParams({
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+      });
       apiGET({
-        url: `${API}/appointments?startDate=${startDate}&endDate=${endDate}`,
+        url: `${API}/appointments?${params.toString()}`,
         onSuccess: (data) => {
           setAppointments(data.filter((appointment) => !appointment.cancelled));
           setIsLoadingData(false);
@@ -36,8 +40,9 @@ const Appointments = () => {
   };
 
   useEffect(() => {
-    if (dateFilter.startDate && dateFilter.endDate) {
-      const { startDate, endDate } = dateFilter;
+    const { startDate, endDate } = dateFilter;
+    // a half-typed datetime-local value parses to an invalid date
+    if (startDate.isValid() && endDate.isValid()) {
       fetchAppointments(startDate, endDate);
     }
   }, [dateFilter.startDate, dateFilter.endDate]);
@@ -56,22 +61,12 @@ const Appointments = () => {
     }));
   };
 
-  const handleCancelAppointment = async (
-    id,
-    patient_id,
-    operatory_id,
-    provider_id,
-    start_time
-  ) => {
+  const handleCancelAppointment = async (id) => {
     try {
       const request = await patchData(
         `${API}/appointments/cancel-appointment/${id}`,
         {
           appt: {
-            patient_id,
-            operatory_id,
-            provider_id,
-            start_time,
             cancelled: true,
           },
         }

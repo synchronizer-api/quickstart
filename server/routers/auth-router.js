@@ -1,53 +1,40 @@
 import { Router } from "express";
-import fetch from "node-fetch";
-import serverConfig from "../server-config.js";
-import { getHeaders } from "../utils.js";
-
-serverConfig();
+import { asyncRoute, nexFetch } from "../utils.js";
 
 const authRouter = Router();
 
-authRouter.get("/", async (req, res) => {
-  try {
-    const response = await fetch(`${process.env.API_URL}/authenticates?`, {
-      headers: getHeaders(true),
+// Exchanges the API key for a bearer token and keeps it in the session.
+authRouter.get(
+  "/",
+  asyncRoute(async (req, res) => {
+    const { body } = await nexFetch("/authenticates", {
       method: "POST",
+      apiKey: process.env.API_KEY,
     });
 
-    const result = await response.json();
-
-    if (result.code) {
-      req.session.token = result.data.token;
+    if (body.code) {
+      req.session.token = body.data.token;
     }
 
     res.send({
-      authenticated: result.code,
+      authenticated: Boolean(body.code),
+      error: body.code ? null : body.error,
     });
-  } catch (error) {
-    console.log(error);
-  }
+  })
+);
+
+authRouter.get("/logout", (req, res) => {
+  req.session.destroy();
+
+  res.send({
+    authenticated: false,
+  });
 });
 
-authRouter.get("/logout", async (req, res) => {
-  try {
-    req.session.destroy();
-
-    res.send({
-      authenticated: false,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-authRouter.get("/is-authenticated", async (req, res) => {
-  try {
-    res.send({
-      authenticated: req.session.token ? true : false,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+authRouter.get("/is-authenticated", (req, res) => {
+  res.send({
+    authenticated: Boolean(req.session.token),
+  });
 });
 
 export { authRouter };

@@ -6,18 +6,18 @@ import { HomeContext } from "../../helpers/protected-route";
 import TrashIcon from "../../icons/trash";
 import styles from "./styles.module.css";
 
-const AppointmentCategories = () => {
-  const [categories, setCategories] = useState([]);
+const AppointmentTypes = () => {
+  const [types, setTypes] = useState([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const { onError } = useContext(HomeContext);
 
   const loadData = () => {
     setIsLoadingData(true);
     apiGET({
-      url: `${process.env.REACT_APP_API}/appointment-categories`,
+      url: `${process.env.REACT_APP_API}/appointment-types`,
       onSuccess: (data) => {
         setIsLoadingData(false);
-        setCategories(data);
+        setTypes(data);
       },
       onError: () => {
         setIsLoadingData(false);
@@ -33,7 +33,7 @@ const AppointmentCategories = () => {
   const onDelete = (id) => {
     if (id) {
       apiDELETE({
-        url: `${process.env.REACT_APP_API}/appointment-categories/${id}`,
+        url: `${process.env.REACT_APP_API}/appointment-types/${id}`,
         onSuccess: (data) => {
           loadData();
         },
@@ -43,17 +43,17 @@ const AppointmentCategories = () => {
   };
 
   return (
-    <CategoriesList
-      items={categories}
+    <AppointmentTypesList
+      items={types}
       onDelete={onDelete}
       isLoadingData={isLoadingData}
     />
   );
 };
 
-const CategoriesList = ({ items, onDelete, isLoadingData }) => {
+const AppointmentTypesList = ({ items, onDelete, isLoadingData }) => {
   const handleDelete = (id) => {
-    window.confirm("Are you sure you want to delete this category?") &&
+    window.confirm("Are you sure you want to delete this appointment type?") &&
       onDelete(id);
   };
 
@@ -94,4 +94,4 @@ const CategoriesList = ({ items, onDelete, isLoadingData }) => {
   );
 };
 
-export { AppointmentCategories };
+export { AppointmentTypes };
