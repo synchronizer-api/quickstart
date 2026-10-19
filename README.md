@@ -136,24 +136,19 @@ Please contact the NexHealth team if you have any questions about these values.
 
 ## Installation
 
-Install the required dependencies using the following command:
+From the repository root, install the dependencies for both apps:
 
 ```sh
-
-cd ./server
-npm install
-
-cd ./frontend
-npm install
-
+cd server && npm install
+cd ../frontend && npm install
 ```
 
 ## Starting the Node server
 
-Navigate to the server folder and run the following command:
+In a terminal at the repository root, run:
 
 ```sh
-cd ./server
+cd server
 npm run start
 ```
 
@@ -175,10 +170,10 @@ Server is running on port 4000
 
 ## Starting the Frontend app
 
-To start the frontend app:
+In a second terminal at the repository root, run:
 
 ```sh
-cd ./frontend
+cd frontend
 npm run start
 ```
 
