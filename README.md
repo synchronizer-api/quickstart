@@ -49,6 +49,7 @@ Synchronizer supports a wide range of dental platforms, including:
 - Denticon
 - And more
 
+## Quick Links
 - [Getting started](#getting-started)
 - [API version and endpoints used](#api-version-and-endpoints-used)
 - [Prerequisites](#prerequisites)
