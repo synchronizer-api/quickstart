@@ -11,9 +11,8 @@
 </p>
 
 - **[API Quickstart](https://github.com/synchronizer-api/quickstart)**
-- **[Postman Collection](https://god.gw.postman.com/run-collection/19774779-358d4afa-f4b1-4aac-8167-2d73f9a92882)**
 
-  [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/19774779-358d4afa-f4b1-4aac-8167-2d73f9a92882?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D19774779-358d4afa-f4b1-4aac-8167-2d73f9a92882%26entityType%3Dcollection%26workspaceId%3D67bf5f45-40d8-4daf-a34c-b9572c949471)
+- **[Postman Collection](https://god.gw.postman.com/run-collection/19774779-358d4afa-f4b1-4aac-8167-2d73f9a92882)**
 
 - **[API Reference](https://docs.nexhealth.com/reference/introduction)**
   
