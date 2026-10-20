@@ -96,7 +96,6 @@ const ProtectedRoute = ({ children }) => {
             style={{
               marginTop: "2rem",
               display: "flex",
-              // flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
             }}
